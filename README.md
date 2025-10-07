@@ -40,11 +40,13 @@ You will:
 
 The API will have the following endpoints:
 
-- `GET /api/products`: Get all products
+- `GET /api/products`: Get all products (filters: `category`, `inStock`, `minPrice`, `maxPrice`; pagination: `page`, `limit`)
 - `GET /api/products/:id`: Get a specific product
 - `POST /api/products`: Create a new product
 - `PUT /api/products/:id`: Update a product
 - `DELETE /api/products/:id`: Delete a product
+- `GET /api/products/search?q=term`: Full-text search on `name` and `description`
+- `GET /api/products/stats/category`: Aggregated stats by category
 
 ## Submission
 
