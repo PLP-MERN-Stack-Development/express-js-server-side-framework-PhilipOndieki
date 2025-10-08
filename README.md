@@ -63,12 +63,12 @@ All `/api/products` endpoints require an API key for authentication.
 
 **Header Required:**
 ```
-x-api-key: your-secret-api-key
+x-api-key: your-secret-api-key-12345
 ```
 
 **Example:**
 ```bash
-curl -H "x-api-key: 123-12345" http://localhost:3000/api/products
+curl -H "x-api-key: your-secret-api-key-12345" http://localhost:3000/api/products
 ```
 
 ---
@@ -144,7 +144,7 @@ Retrieve a list of all products with optional filtering and pagination.
 
 **Example Request:**
 ```bash
-curl -H "x-api-key: 123-12345" \
+curl -H "x-api-key: your-secret-api-key-12345" \
   "http://localhost:3000/api/products?category=electronics&inStock=true&page=1&limit=10"
 ```
 
@@ -184,7 +184,7 @@ Retrieve a specific product by its ID.
 
 **Example Request:**
 ```bash
-curl -H "x-api-key: 123-12345" \
+curl -H "x-api-key: your-secret-api-key-12345" \
   http://localhost:3000/api/products/6705abc123def456789
 ```
 
@@ -224,7 +224,7 @@ Create a new product in the database.
 
 **Headers:**
 ```
-x-api-key: your-api-key
+x-api-key: your-secret-api-key-12345
 Content-Type: application/json
 ```
 
@@ -241,7 +241,7 @@ Content-Type: application/json
 **Example Request:**
 ```bash
 curl -X POST \
-  -H "x-api-key: 123-12345" \
+  -H "x-api-key: your-secret-api-key-12345" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Gaming Laptop",
@@ -310,7 +310,7 @@ All fields are optional. Only include fields you want to update.
 **Example Request:**
 ```bash
 curl -X PUT \
-  -H "x-api-key: 123-12345" \
+  -H "x-api-key: your-secret-api-key-12345" \
   -H "Content-Type: application/json" \
   -d '{
     "price": 1199.99,
@@ -359,7 +359,7 @@ Delete a product by ID.
 **Example Request:**
 ```bash
 curl -X DELETE \
-  -H "x-api-key: 123-12345" \
+  -H "x-api-key: your-secret-api-key-12345" \
   http://localhost:3000/api/products/6705abc123def456790
 ```
 
@@ -396,7 +396,7 @@ Search for products by name or description using full-text search.
 
 **Example Request:**
 ```bash
-curl -H "x-api-key: 123-12345" \
+curl -H "x-api-key: your-secret-api-key-12345" \
   "http://localhost:3000/api/products/search?q=laptop"
 ```
 
@@ -445,7 +445,7 @@ Get aggregated statistics for all product categories.
 
 **Example Request:**
 ```bash
-curl -H "x-api-key: 123-12345" \
+curl -H "x-api-key: your-secret-api-key-12345" \
   http://localhost:3000/api/products/stats/category
 ```
 
@@ -526,55 +526,401 @@ The API uses standard HTTP status codes and returns errors in a consistent forma
 
 ## Examples
 
-### Complete Workflow Example
+### Real API Request and Response Examples
 
-#### 1. Create a new product
-```bash
-curl -X POST \
-  -H "x-api-key: 123-12345" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Wireless Mouse",
-    "description": "Ergonomic wireless mouse",
-    "price": 29.99,
+Below are actual examples of API requests and their corresponding responses from a running instance of the Product API.
+
+---
+
+#### Example 1: Get All Products (Paginated)
+
+**Request:**
+```http
+GET http://localhost:3000/api/products/
+```
+
+**Headers:**
+```
+x-api-key: your-secret-api-key-12345
+```
+
+**Response:** `200 OK`
+```json
+{
+    "success": true,
+    "page": 1,
+    "limit": 10,
+    "total": 5,
+    "items": [
+        {
+            "_id": "68e5464d12ff79b4e84c043a",
+            "name": "Blender Pro 3000",
+            "description": "Professional-grade blender with 10 speed settings and 2L capacity",
+            "price": 89.99,
+            "category": "kitchen",
+            "inStock": false,
+            "__v": 0,
+            "createdAt": "2025-10-07T16:56:45.689Z",
+            "updatedAt": "2025-10-07T16:56:45.689Z"
+        },
+        {
+            "_id": "68e5464d12ff79b4e84c0438",
+            "name": "Mechanical Keyboard",
+            "description": "RGB mechanical keyboard with Cherry MX switches",
+            "price": 149.99,
+            "category": "electronics",
+            "inStock": true,
+            "__v": 0,
+            "createdAt": "2025-10-07T16:56:45.688Z",
+            "updatedAt": "2025-10-07T16:56:45.688Z"
+        },
+        {
+            "_id": "68e5464d12ff79b4e84c0439",
+            "name": "Smart Coffee Maker",
+            "description": "WiFi-enabled programmable coffee maker with mobile app control",
+            "price": 129.99,
+            "category": "kitchen",
+            "inStock": true,
+            "__v": 0,
+            "createdAt": "2025-10-07T16:56:45.688Z",
+            "updatedAt": "2025-10-07T16:56:45.688Z"
+        },
+        {
+            "_id": "68e5464d12ff79b4e84c0437",
+            "name": "Wireless Gaming Mouse",
+            "description": "Ergonomic wireless gaming mouse with RGB lighting and 16000 DPI",
+            "price": 79.99,
+            "category": "electronics",
+            "inStock": true,
+            "__v": 0,
+            "createdAt": "2025-10-07T16:56:45.687Z",
+            "updatedAt": "2025-10-07T16:56:45.687Z"
+        },
+        {
+            "_id": "68e5464d12ff79b4e84c0436",
+            "name": "MacBook Pro 16\"",
+            "description": "High-performance laptop with M3 Pro chip, 16GB RAM, and 512GB SSD",
+            "price": 2499.99,
+            "category": "electronics",
+            "inStock": true,
+            "__v": 0,
+            "createdAt": "2025-10-07T16:56:45.681Z",
+            "updatedAt": "2025-10-07T16:56:45.681Z"
+        }
+    ]
+}
+```
+
+**Notes:**
+- Returns 5 products out of a total of 5 in the database
+- Products are sorted by creation date (newest first)
+- Default pagination shows page 1 with 10 items per page
+- Each product includes MongoDB metadata (`_id`, `__v`, `createdAt`, `updatedAt`)
+
+---
+
+#### Example 2: Search Products by Keyword
+
+**Request:**
+```http
+GET http://localhost:3000/api/products/search?q=laptop
+```
+
+**Headers:**
+```
+x-api-key: 123-12345
+```
+
+**Query Parameters:**
+- `q=laptop` - Search term to find in product name or description
+
+**Response:** `200 OK`
+```json
+{
+    "success": true,
+    "count": 1,
+    "items": [
+        {
+            "_id": "68e5464d12ff79b4e84c0436",
+            "name": "MacBook Pro 16\"",
+            "description": "High-performance laptop with M3 Pro chip, 16GB RAM, and 512GB SSD",
+            "price": 2499.99,
+            "category": "electronics",
+            "inStock": true,
+            "__v": 0,
+            "createdAt": "2025-10-07T16:56:45.681Z",
+            "updatedAt": "2025-10-07T16:56:45.681Z"
+        }
+    ]
+}
+```
+
+**Notes:**
+- Full-text search matches the term "laptop" in the product description
+- Returns 1 matching product
+- Search is case-insensitive and searches both `name` and `description` fields
+- Maximum of 50 results are returned per search query
+
+---
+
+#### Example 3: Get Category Statistics
+
+**Request:**
+```http
+GET http://localhost:3000/api/products/stats/category
+```
+
+**Headers:**
+```
+x-api-key: 123-12345
+```
+
+**Response:** `200 OK`
+```json
+{
+    "success": true,
+    "stats": [
+        {
+            "_id": "electronics",
+            "count": 3,
+            "avgPrice": 909.99
+        },
+        {
+            "_id": "kitchen",
+            "count": 2,
+            "avgPrice": 109.99
+        }
+    ]
+}
+```
+
+**Notes:**
+- Statistics are aggregated by product category
+- `_id` represents the category name
+- `count` shows the total number of products in that category
+- `avgPrice` displays the average price of products in that category
+- Results are sorted by count in descending order (most products first)
+- Categories: electronics has 3 products averaging $909.99, kitchen has 2 products averaging $109.99
+
+---
+
+### Additional Usage Examples
+
+#### Example 4: Filter Products by Category
+
+**Request:**
+```http
+GET http://localhost:3000/api/products?category=electronics
+```
+
+**Expected Response:**
+Returns only products in the "electronics" category (3 items: MacBook Pro, Wireless Gaming Mouse, Mechanical Keyboard)
+
+---
+
+#### Example 5: Filter by Price Range
+
+**Request:**
+```http
+GET http://localhost:3000/api/products?minPrice=100&maxPrice=200
+```
+
+**Expected Response:**
+Returns products priced between $100 and $200 (Mechanical Keyboard at $149.99, Smart Coffee Maker at $129.99)
+
+---
+
+#### Example 6: Filter by Stock Availability
+
+**Request:**
+```http
+GET http://localhost:3000/api/products?inStock=true
+```
+
+**Expected Response:**
+Returns only products that are currently in stock (4 out of 5 products)
+
+---
+
+#### Example 7: Combined Filters with Pagination
+
+**Request:**
+```http
+GET http://localhost:3000/api/products?category=electronics&inStock=true&page=1&limit=5
+```
+
+**Expected Response:**
+Returns in-stock electronics products on page 1 with a limit of 5 items per page
+
+---
+
+### CRUD Operation Examples
+
+#### Create a New Product
+
+**Request:**
+```http
+POST http://localhost:3000/api/products
+Content-Type: application/json
+x-api-key: your-secret-api-key-12345
+
+{
+    "name": "Wireless Headphones",
+    "description": "Noise-cancelling over-ear headphones with 30-hour battery",
+    "price": 199.99,
     "category": "electronics",
     "inStock": true
-  }' \
-  http://localhost:3000/api/products
+}
 ```
 
-#### 2. Get all electronics products
-```bash
-curl -H "x-api-key: 123-12345" \
-  "http://localhost:3000/api/products?category=electronics"
+**Expected Response:** `201 Created`
+```json
+{
+    "success": true,
+    "product": {
+        "_id": "68e5464d12ff79b4e84c043b",
+        "name": "Wireless Headphones",
+        "description": "Noise-cancelling over-ear headphones with 30-hour battery",
+        "price": 199.99,
+        "category": "electronics",
+        "inStock": true,
+        "createdAt": "2025-10-08T10:00:00.000Z",
+        "updatedAt": "2025-10-08T10:00:00.000Z",
+        "__v": 0
+    }
+}
 ```
 
-#### 3. Search for wireless products
-```bash
-curl -H "x-api-key: 123-12345" \
-  "http://localhost:3000/api/products/search?q=wireless"
+---
+
+#### Update a Product
+
+**Request:**
+```http
+PUT http://localhost:3000/api/products/68e5464d12ff79b4e84c0436
+Content-Type: application/json
+x-api-key: your-secret-api-key-12345
+
+{
+    "price": 2299.99,
+    "inStock": false
+}
 ```
 
-#### 4. Update product price
-```bash
-curl -X PUT \
-  -H "x-api-key: 123-12345" \
-  -H "Content-Type: application/json" \
-  -d '{"price": 24.99}' \
-  http://localhost:3000/api/products/PRODUCT_ID
+**Expected Response:** `200 OK`
+```json
+{
+    "success": true,
+    "product": {
+        "_id": "68e5464d12ff79b4e84c0436",
+        "name": "MacBook Pro 16\"",
+        "description": "High-performance laptop with M3 Pro chip, 16GB RAM, and 512GB SSD",
+        "price": 2299.99,
+        "category": "electronics",
+        "inStock": false,
+        "createdAt": "2025-10-07T16:56:45.681Z",
+        "updatedAt": "2025-10-08T10:05:00.000Z",
+        "__v": 0
+    }
+}
 ```
 
-#### 5. Get category statistics
-```bash
-curl -H "x-api-key: 123-12345" \
-  http://localhost:3000/api/products/stats/category
+---
+
+#### Delete a Product
+
+**Request:**
+```http
+DELETE http://localhost:3000/api/products/68e5464d12ff79b4e84c043a
+x-api-key: your-secret-api-key-12345
 ```
 
-#### 6. Delete a product
-```bash
-curl -X DELETE \
-  -H "x-api-key: 123-12345" \
-  http://localhost:3000/api/products/PRODUCT_ID
+**Expected Response:** `200 OK`
+```json
+{
+    "success": true,
+    "message": "Product deleted"
+}
+```
+
+---
+
+### Error Response Examples
+
+#### Missing API Key
+
+**Request:**
+```http
+GET http://localhost:3000/api/products
+```
+
+**Response:** `401 Unauthorized`
+```json
+{
+    "success": false,
+    "message": "Invalid or missing API key"
+}
+```
+
+---
+
+#### Invalid Product ID
+
+**Request:**
+```http
+GET http://localhost:3000/api/products/invalid-id-123
+x-api-key: your-secret-api-key-12345
+```
+
+**Response:** `404 Not Found`
+```json
+{
+    "success": false,
+    "message": "Product not found"
+}
+```
+
+---
+
+#### Validation Error
+
+**Request:**
+```http
+POST http://localhost:3000/api/products
+Content-Type: application/json
+x-api-key: your-secret-api-key-12345
+
+{
+    "name": "A",
+    "price": -10,
+    "category": "electronics"
+}
+```
+
+**Response:** `422 Unprocessable Entity`
+```json
+{
+    "success": false,
+    "message": "Field \"name\" must be a string with length >= 2"
+}
+```
+
+---
+
+#### Search Query Too Short
+
+**Request:**
+```http
+GET http://localhost:3000/api/products/search?q=a
+x-api-key: your-secret-api-key-12345
+```
+
+**Response:** `400 Bad Request`
+```json
+{
+    "success": false,
+    "message": "Query parameter \"q\" must be at least 2 characters"
+}
 ```
 
 ---
@@ -639,7 +985,9 @@ curl -X DELETE \
 ├── .env.example            # Example environment variables
 ├── .gitignore              # Git ignore file
 ├── package.json            # Project dependencies
-├── README.md               # This file
+├── README.md               # This file (API documentation)
+├── README2.md              # Original README.md file
+├── Week2-Assignment.md     # Assignment instructions
 └── server.js               # Main Express server file
 ```
 
