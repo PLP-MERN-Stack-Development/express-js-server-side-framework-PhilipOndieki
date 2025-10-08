@@ -1,27 +1,18 @@
-// MongoDB connection helper using Mongoose
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-async function connectDB() {
-  const mongoUri = process.env.MONGODB_URI;
-  if (!mongoUri) {
-    console.error('❌ MONGODB_URI is not set in environment variables');
+const connectDB = async () => {
+  try{
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+  });
+  console.log('MongoDB connected ....')
+
+  } catch (error) {
+    console.error(error.message);
     process.exit(1);
   }
-
-  try {
-    await mongoose.connect(mongoUri, {
-      autoIndex: true,
-      serverSelectionTimeoutMS: 10000,
-    });
-
-    const { host, port, name } = mongoose.connection;
-    console.log(`✅ MongoDB connected: ${host}:${port}/${name}`);
-  } catch (err) {
-    console.error('❌ MongoDB connection error:', err.message);
-    process.exit(1);
-  }
-}
+};
 
 module.exports = connectDB;
-
-
